@@ -5,7 +5,7 @@ set shiftwidth=4
 set tabstop=4
 
 " Misc config
-set number
+set number relativenumber
 set mouse=a
 set clipboard=unnamedplus
 set nocompatible
@@ -15,6 +15,7 @@ set fillchars=""
 " Plugins
 call plug#begin()
 Plug 'tpope/vim-surround' 
+Plug 'tpope/vim-commentary'
 Plug 'prettier/vim-prettier'
 Plug 'pangloss/vim-javascript'
 Plug 'MaxMEllon/vim-jsx-pretty'
@@ -33,7 +34,11 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-rooter'
 " Plug 'dense-analysis/ale'
+Plug 'mattn/emmet-vim'
 call plug#end()
+
+" Emmet
+let g:user_emmet_leader_key=','
 
 " Indentation
 filetype plugin indent on
@@ -43,6 +48,7 @@ set smartindent
 set indentexpr
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 " Auto Nerdtree
+nnoremap <C-t> :NERDTreeToggle<CR>
 autocmd VimEnter * NERDTree
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>": "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>": "\<S-Tab>"
