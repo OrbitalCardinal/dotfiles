@@ -9,7 +9,8 @@ set number relativenumber
 set mouse=a
 set clipboard=unnamedplus
 set nocompatible
-set encoding=utf-8
+set encoding=UTF-8
+set guifont=DroidSansMono\ Nerd\ Font\ 11
 set fillchars=""
 
 " Plugins
@@ -19,6 +20,7 @@ Plug 'tpope/vim-commentary'
 Plug 'prettier/vim-prettier'
 Plug 'pangloss/vim-javascript'
 Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'othree/xml.vim'
 Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'} 
 Plug 'alvan/vim-closetag'
@@ -35,6 +37,10 @@ Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-rooter'
 " Plug 'dense-analysis/ale'
 Plug 'mattn/emmet-vim'
+Plug 'markvincze/panda-vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 call plug#end()
 
 " Emmet
@@ -46,18 +52,25 @@ set autoindent
 set cindent
 set smartindent
 set indentexpr
+let g:html_indent_inctags='*'
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 " Auto Nerdtree
-nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
 autocmd VimEnter * NERDTree
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>": "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>": "\<S-Tab>"
-autocmd BufWritePost * NERDTreeFocus | execute 'normal R' | wincmd p
+" autocmd BufWritePost * NERDTreeFocus | execute 'normal R' | wincmd p
+let NERDTreeMinimalUI=1
 
 " Closetag config
 source  ~/.config/nvim/closetag.vim 
 
+set t_Co=256
+set t_ut=
 colorscheme codedark
+let g:codedark_term256=1
+let g:airline_powerline_fonts=1
+let g:airline_theme= 'codedark'
 hi normal ctermbg=none ctermfg=none guibg=none guifg=none
 hi EndOfBuffer ctermfg=none ctermbg=none
 hi clear VertSplit
@@ -65,7 +78,6 @@ hi clear LineNr
 hi clear SignColumn
 hi Directory ctermbg=none
 " Airline
-let g:airline_powerline_fonts=1
 
 " Vimsence config
 let g:python3_host_prog = '/usr/bin/python3.9'
@@ -105,3 +117,7 @@ let g:ale_fixers = {
 let g:ale_sign_error = 'X'
 let g:ale_sign_warning = '!'
 let g:ale_fix_on_save = 1
+
+" PERSONAL BINDINGS
+" Open a new terminal below current split
+:nnoremap <silent> <C-t> :rightbelow :sp<CR> :term<CR> <C-w>10- <C-w>j i 
