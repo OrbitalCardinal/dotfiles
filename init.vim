@@ -19,10 +19,12 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'prettier/vim-prettier'
 Plug 'pangloss/vim-javascript'
+Plug 'yuezk/vim-js'
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'othree/xml.vim'
 Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'} 
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'alvan/vim-closetag'
 Plug 'tomasiser/vim-code-dark'
 Plug 'jiangmiao/auto-pairs'
@@ -42,6 +44,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 call plug#end()
+
 
 " Emmet
 let g:user_emmet_leader_key=','
