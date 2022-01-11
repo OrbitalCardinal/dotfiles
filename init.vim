@@ -3,7 +3,8 @@ set number
 set expandtab
 set shiftwidth=4
 set tabstop=4
-
+filetype plugin on
+syntax on
 call plug#begin()
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
@@ -11,12 +12,40 @@ Plug 'hrsh7th/nvim-compe'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'tomasiser/vim-code-dark'
+Plug 'pangloss/vim-javascript'
+Plug 'navarasu/onedark.nvim'
+Plug 'fratajczak/one-monokai-vim'
+Plug 'Mofiqul/vscode.nvim'
+Plug 'markvincze/panda-vim'
+Plug 'kaicataldo/material.vim', { 'branch': 'main' }
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'folke/lsp-colors.nvim'
+Plug 'olimorris/onedarkpro.nvim'
+Plug 'ap/vim-css-color'
+Plug 'chrisbra/Colorizer'
 call plug#end()
 
-colorscheme codedark
+let g:onedark_style= 'deep'
+set t_Co=256
+set termguicolors
+let g:vim_jsx_pretty_colorful_config = 1
+let g:vscode_style = 'dark'
+colorscheme onedark
+" When using onedark
+hi statusline guifg=#ffffff guibg=#373737
+"
+lua << EOF
+require("lsp-colors").setup({
+    Error = "#ffffff",
+    Warning = "#ffffff",
+    Information = "#ffffff",
+    Hint = "#ffffff"
+})
+EOF
 hi normal ctermbg=none ctermfg=none guibg=none guifg=none
-hi EndOfBuffer ctermfg=none ctermbg=none
+hi EndOfBuffer ctermfg=none ctermbg=none guibg=none guifg=none
 hi clear LineNr
 hi clear SignColumn
 hi Directory ctermbg=none
@@ -141,10 +170,9 @@ require'nvim-treesitter.configs'.setup {
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
+    additional_vim_regex_highlighting = true,
   },
 }
 EOF
 
 hi NormalFloat ctermbg=none
-
