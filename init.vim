@@ -1,126 +1,218 @@
-let mapleader= ","
-" Tab config
+set clipboard=unnamedplus
+set number
 set expandtab
 set shiftwidth=4
 set tabstop=4
-
-" Misc config
-set number relativenumber
-set mouse=a
-set clipboard=unnamedplus
-set nocompatible
-set encoding=UTF-8
-set guifont=DroidSansMono\ Nerd\ Font\ 11
-set fillchars=""
-
-" Plugins
+filetype plugin on
+syntax on
 call plug#begin()
-Plug 'tpope/vim-surround' 
-Plug 'tpope/vim-commentary'
-Plug 'prettier/vim-prettier'
-Plug 'pangloss/vim-javascript'
-Plug 'yuezk/vim-js'
-Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'othree/xml.vim'
-Plug 'preservim/nerdtree'
-Plug 'neoclide/coc.nvim', {'branch': 'release'} 
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'hrsh7th/nvim-compe'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'ray-x/lsp_signature.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'alvan/vim-closetag'
+Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'tomasiser/vim-code-dark'
-Plug 'jiangmiao/auto-pairs'
-Plug 'vim-airline/vim-airline'
-Plug 'vimsence/vimsence'
-Plug 'neovim/pynvim'
-Plug 'wellle/targets.vim'
-Plug 'hail2u/vim-css3-syntax'
-Plug 'mortonfox/nerdtree-term'
-Plug 'junegunn/fzf' 
-Plug 'junegunn/fzf.vim'
-Plug 'airblade/vim-rooter'
-" Plug 'dense-analysis/ale'
-Plug 'mattn/emmet-vim'
+Plug 'pangloss/vim-javascript'
+Plug 'navarasu/onedark.nvim'
+Plug 'fratajczak/one-monokai-vim'
+Plug 'Mofiqul/vscode.nvim'
 Plug 'markvincze/panda-vim'
-Plug 'ryanoasis/vim-devicons'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'kaicataldo/material.vim', { 'branch': 'main' }
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'folke/lsp-colors.nvim'
+Plug 'olimorris/onedarkpro.nvim'
+Plug 'ap/vim-css-color'
+Plug 'chrisbra/Colorizer'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-commentary'
 call plug#end()
 
+" Telescope mapping
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>;
 
-" Emmet
-let g:user_emmet_leader_key=','
 
-" Indentation
-filetype plugin indent on
-set autoindent
-set cindent
-set smartindent
-set indentexpr
-let g:html_indent_inctags='*'
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-" Auto Nerdtree
-nnoremap <C-n> :NERDTreeToggle<CR>
-autocmd VimEnter * NERDTree
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>": "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>": "\<S-Tab>"
-" autocmd BufWritePost * NERDTreeFocus | execute 'normal R' | wincmd p
-let NERDTreeMinimalUI=1
-
-" Closetag config
-source  ~/.config/nvim/closetag.vim 
-
+let g:onedark_style= 'deep'
 set t_Co=256
-set t_ut=
-colorscheme codedark
-let g:codedark_term256=1
-let g:airline_powerline_fonts=1
-let g:airline_theme= 'codedark'
+set termguicolors
+let g:vim_jsx_pretty_colorful_config = 1
+let g:vscode_style = 'dark'
+colorscheme onedark
+" When using onedark
+hi statusline guifg=#ffffff guibg=#373737
+"
+lua << EOF
+require("lsp-colors").setup({
+    Error = "#ffffff",
+    Warning = "#ffffff",
+    Information = "#ffffff",
+    Hint = "#ffffff"
+})
+EOF
 hi normal ctermbg=none ctermfg=none guibg=none guifg=none
-hi EndOfBuffer ctermfg=none ctermbg=none
-hi clear VertSplit
+hi EndOfBuffer ctermfg=none ctermbg=none guibg=none guifg=none
 hi clear LineNr
 hi clear SignColumn
 hi Directory ctermbg=none
-" Airline
 
-" Vimsence config
-let g:python3_host_prog = '/usr/bin/python3.9'
-let g:vimsence_client_id = '439476230543245312'
-let g:vimsence_small_text = 'NeoVim'
-let g:vimsence_small_image = 'neovim'
-let g:vimsence_editing_details = 'Editing: {}'
-let g:vimsence_editing_state = 'Working on: {}'
-let g:vimsence_file_explorer_text = 'In NERDTree'
-let g:vimsence_file_explorer_details = 'Looking for files'
-let g:vimsence_custom_icons = {'filetype': 'iconname'}
+set completeopt=menuone,noselect
+let g:compe = {}
+let g:compe.enabled = v:true
+let g:compe.autocomplete = v:true
+let g:compe.debug = v:false
+let g:compe.min_length = 1
+let g:compe.preselect = 'enable'
+let g:compe.throttle_time = 80
+let g:compe.source_timeout = 200
+let g:compe.resolve_timeout = 800
+let g:compe.incomplete_delay = 400
+let g:compe.max_abbr_width = 100
+let g:compe.max_kind_width = 100
+let g:compe.max_menu_width = 100
+let g:compe.documentation = v:true
 
-" FZF
-nnoremap <silent> <C-f> :Files<CR>
-" Customize fzf colors to match your color scheme
-" - fzf#wrap translates this to a set of `--color` options
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+let g:compe.source = {}
+let g:compe.source.path = v:true
+let g:compe.source.buffer = v:true
+let g:compe.source.calc = v:true
+let g:compe.source.nvim_lsp = v:true
+let g:compe.source.nvim_lua = v:true
+let g:compe.source.vsnip = v:true
+let g:compe.source.ultisnips = v:true
+let g:compe.source.luasnip = v:true
+let g:compe.source.emoji = v:true
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
-" Ale
-let g:ale_fixers = {
- \ 'javascript': ['eslint']
- \ }
+lua << EOF
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
 
-let g:ale_sign_error = 'X'
-let g:ale_sign_warning = '!'
-let g:ale_fix_on_save = 1
+local check_back_space = function()
+    local col = vim.fn.col('.') - 1
+    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
+end
 
-" PERSONAL BINDINGS
-" Open a new terminal below current split
-:nnoremap <silent> <C-t> :rightbelow :sp<CR> :term<CR> <C-w>10- <C-w>j i 
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-n>"
+  elseif vim.fn['vsnip#available'](1) == 1 then
+    return t "<Plug>(vsnip-expand-or-jump)"
+  elseif check_back_space() then
+    return t "<Tab>"
+  else
+    return vim.fn['compe#complete']()
+  end
+end
+_G.s_tab_complete = function()
+  if vim.fn.pumvisible() == 1 then
+    return t "<C-p>"
+  elseif vim.fn['vsnip#jumpable'](-1) == 1 then
+    return t "<Plug>(vsnip-jump-prev)"
+  else
+    -- If <S-Tab> is not working in your terminal, change it to <C-h>
+    return t "<S-Tab>"
+  end
+end
+
+vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = {
+    'documentation',
+    'detail',
+    'additionalTextEdits',
+  }
+}
+
+-- Servers setup
+local lspconfig = require('lspconfig')
+require'lspconfig'.tsserver.setup{
+on_attach = function()
+		require"lsp_signature".on_attach({
+		bind = true,
+		floating_window = true,
+		fix_pos = false,
+		hint_enable = true,
+		hint_prefix = "🐼 ",
+		hi_parameter = "Search",
+		handler_opts = {
+			border = "rounded"
+			}
+		})
+                end
+
+}
+
+-- CSS/SASS
+require'lspconfig'.cssls.setup {
+   capabilities = capabilities,
+}
+
+-- Angular
+local configPath = "/usr/lib/node_modules/@angular/" 
+local languageServerPath = configPath.."/language-server"
+
+require'lspconfig'.angularls.setup{
+    capabilities = capabilities,
+  cmd = {"node", languageServerPath.."/node_modules/@angular/language-service/index.js", "--stdio", "--tsProbeLocations", languageServerPath, "--ngProbeLocations", languageServerPath},
+  on_new_config = function(new_config,new_root_dir)
+  new_config.cmd ={"node", languageServerPath.."/node_modules/@angular/language-service/index.js", "--stdio", "--tsProbeLocations", languageServerPath, "--ngProbeLocations", languageServerPath}
+  end,
+}
+
+-- HTML
+require'lspconfig'.html.setup {
+    capabilities = capabilities
+}
+
+-- EMMET
+require'lspconfig'.emmet_ls.setup{
+    capabilities = capabilities,
+    filetypes = { "html", "css", "typescriptreact", "javascriptreact" },
+}
+
+require'nvim-treesitter.configs'.setup {
+  -- One of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = "maintained",
+
+  -- Install languages synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- List of parsers to ignore installing
+  -- ignore_install = { "javascript" },
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    -- list of language that will be disabled
+    -- disable = { "c", "rust" },
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = true,
+  },
+}
+EOF
+
+hi NormalFloat ctermbg=none
