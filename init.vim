@@ -2,17 +2,19 @@ set clipboard=unnamedplus
 set number
 set expandtab
 set shiftwidth=4
-set tabstop=4
+set tabstop=4 
 filetype plugin on
 syntax on
 call plug#begin()
 Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/nvim-lsp-installer' 
 Plug 'nvim-lua/completion-nvim'
 Plug 'hrsh7th/nvim-compe'
 Plug 'hrsh7th/vim-vsnip'
+Plug 'lervag/vimtex'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'MaxMEllon/vim-jsx-pretty' 
 Plug 'tomasiser/vim-code-dark'
 Plug 'pangloss/vim-javascript'
 Plug 'navarasu/onedark.nvim'
@@ -31,12 +33,19 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary'
 call plug#end()
 
+" VIMTEX CONFIG
+let g:vimtex_view_general_viewer = 'evince'
+let g:vimtex_view_general_options
+    \ = '-reuse-instance -forward-search @tex @line @pdf'
+let g:vimtex_compiler_method = 'latexmk'
 " Telescope mapping
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>;
 
+" LSP mapping
+nnoremap <leader>ca <cmd>lua vim.lsp.buf.code_action()<cr>
 
 let g:onedark_style= 'deep'
 set t_Co=256
@@ -187,6 +196,12 @@ require'lspconfig'.html.setup {
 require'lspconfig'.emmet_ls.setup{
     capabilities = capabilities,
     filetypes = { "html", "css", "typescriptreact", "javascriptreact" },
+}
+
+-- LATEX
+require'lspconfig'.texlab.setup {
+    capabilities = capabilities;
+    filetypes = {'plaintex', 'tex' , 'bib'};
 }
 
 require'nvim-treesitter.configs'.setup {
